@@ -1,0 +1,154 @@
+{% extends 'Website/base.html' %}
+
+{% block title %}
+	<title>{{item.name}}</title>
+{% endblock %}
+
+{% block content %}
+	<div class='container' id='list'>
+		<div class='row'>
+
+			{% if item.status %}
+			{% else %}
+				<div class='alert alert-danger'>
+					<h3 style="text-align: center;"><strong>Item is out of stock</strong></h3>
+				</div>
+			{% endif %}
+
+			<h2 id='itemname'>{{item.name}}</h2>
+			<div class='col-sm-4'>
+				<img id='detailpageimage' src="/static/{{ item.pic }}" class='img-responsive'/>
+			</div>
+			<div class='col-sm-8'>
+				<table class='table table-hover'>
+					<thead>
+						<tr>
+							<th>Cost</th>
+							<th>Category</th>
+							<th>Status</th>
+							<th>Stock</th>
+							<th>Quantity</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>$ {{item.unit_price}}</td>
+							<td>{{item.category}}</td>
+							{% if item.status %}
+								<td>Available</td>
+							{% else %}
+								<td>Unavailable</td>
+							{% endif %}
+							<td>{{item.quantity}}</td>
+							<td>
+								<select id="numitem" name="nums">
+									{% for i in qty %}
+										<option value='{{i}}'>{{i}}</option>
+									{% endfor %}
+								</select>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div class='panel panel-default' id='description'>
+					<div class='panel-heading'>
+						<h3>Description</h3>
+					</div>
+					<div class='panel-body'>
+						{{item.specs}}
+					</div>
+				</div>
+				
+				{% if user.is_authenticated %}
+					<a href="#" id='buybtn' class='btn btn-info btn-lg buy' data-toggle='modal' data-target="#confirmModal">
+						<span class='glyphicon glyphicon-usd'></span>
+						Buy Now
+					</a>&nbsp;
+					<a href='#' class='btn btn-info btn-lg buy' data-toggle='modal' data-target='#confirmModal'>
+						<span class='glyphicon glyphicon-shopping-cart'></span>
+						Add to Cart
+					</a>
+				{% else %}
+					<button type='button' class='btn btn-info btn-lg' data-toggle="modal" data-target="#regModal">
+						<span class='glyphicon glyphicon-usd'></span>
+						Buy Now
+					</button>&nbsp;
+					<button type='button' class='btn btn-info btn-lg' data-toggle="modal" data-target="#regModal">
+						<span class='glyphicon glyphicon-shopping-cart'></span>
+						Add to Cart
+					</button>
+				{% endif %}
+
+				{% if item.status %}
+				{% else %}
+				<script type="text/javascript">
+					$('.buy').addClass('disabled');
+				</script>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+  		<div class="modal fade" id="regModal" role="dialog">
+    		<div class="modal-dialog">
+      			<div class="modal-content">
+        			<div class="modal-header">
+          				<button type="button" class="close" data-dismiss="modal">&times;</button>
+          				<h4 class="modal-title">Sign Up</h4>
+        			</div>
+        			<div class="modal-body">
+						<form method="post" action="/register/" role="form" id="user_form">
+						{% csrf_token %}
+					        <div class="form-group">
+					        	<label class="control-label" for="signupName"><span class="glyphicon glyphicon-user"></span>  Username</label>
+				              	<input id="name" name="username" type="text" maxlength="50" class="form-control">
+				            </div>
+				            <div class="form-group">
+				            	<label class="control-label" for="signupEmail"><span class='glyphicon glyphicon-envelope'></span> Email</label>
+				              	<input name="email" type="email" maxlength="50" class="form-control">
+				            </div>
+				            <div class="form-group">
+				            	<label class="control-label" for="signupPassword"><span class="glyphicon glyphicon-eye-open"> Password</label>
+				              	<input name="password" type="password" maxlength="25" class="form-control" placeholder="At least 6 characters" length="40">
+			            	</div>
+							<hr>
+							<div class="form-group">
+			              		<button type="submit" class="btn btn-success btn-block">Create your account</button>
+			            	</div>
+						</form>
+        			</div>
+      			</div> 
+    		</div>
+  		</div>
+	</div>
+
+	<div class="container">
+		<div class='modal fade' role='dialog' id='confirmModal'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+					<div class="modal-header">
+          				<h4 class="modal-title">Confirm Request</h4>
+        			</div>
+        			<div class='modal-body'>
+        				<div class='panel'>
+        					<div class='panel-heading'>
+        						<h2>{{item.name}}</h2>
+        					</div>
+        					<div class='panel-body'>
+        						<p>Price: {{item.unit_price}}</p>
+        						<p>Category: {{item.category}}</p>
+        					</div>
+        				</div>
+        			</div>
+        			<div class='modal-footer'>
+        				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        				<a href="{% url 'thanks' item.pk %}" class='btn btn-success'>Confirm</a>
+        			</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}
