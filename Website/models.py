@@ -18,6 +18,9 @@ class Item(models.Model):
 	specs = models.TextField()
 	unit_price = models.IntegerField()
 	item_id = models.IntegerField(primary_key=True)
+	xcord = models.IntegerField(null=True)
+	ycord = models.IntegerField(null=True)
+	QRcode = models.CharField(max_length=20, null=True)
 	
 	def __str__(self):
 		return self.name 
