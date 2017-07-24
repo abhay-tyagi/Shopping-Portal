@@ -6,13 +6,13 @@ from django.contrib.auth.models import User
 
 class Item(models.Model):
 	CATEGORIES = (
+		('Select category', '-'),
 		('Stationary', 'Stationary'),
-		('Confectionary', 'Confectionary'),
-		('Garments', 'Garments'),
+		('Eatables', 'Eatables'),
 	)
 
 	name = models.CharField(max_length=50)
-	category = models.CharField(max_length=50, choices=CATEGORIES, default='Select Category')
+	category = models.CharField(max_length=50, choices=CATEGORIES, default='-')
 	quantity = models.IntegerField()
 	pic = models.FileField(upload_to = 'images/', null=True, blank=True)
 	specs = models.TextField()
@@ -21,6 +21,7 @@ class Item(models.Model):
 	xcord = models.IntegerField(null=True)
 	ycord = models.IntegerField(null=True)
 	QRcode = models.CharField(max_length=20, null=True)
+	cart = models.TextField(null=True)
 	
 	def __str__(self):
 		return self.name 
