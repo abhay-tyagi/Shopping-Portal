@@ -1,8 +1,17 @@
+var selectedValue;
+
 function reduceQty()
 {
 	var ddl = document.getElementById("numitem");
-	var selectedValue = ddl.options[ddl.selectedIndex].value;
+	selectedValue = ddl.options[ddl.selectedIndex].text;
+}
 
+function showTotal()
+{
+	var ddl = document.getElementById("numitem");
+	var vale = ddl.options[ddl.selectedIndex].text;
+	
+	$("#totalc").text(vale);
 }
 
 

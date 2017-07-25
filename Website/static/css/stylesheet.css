@@ -1,3 +1,7 @@
+#dang-box {
+	text-align: center;
+}
+
 .foot {
 	padding-top: 10px;
 }
@@ -43,7 +47,7 @@ body {
 }
 
 .thumbnail{       
-    background: #b38989; 
+    background: #b38999; 
     width: 300px; 
     height: 400px;
     overflow: auto;

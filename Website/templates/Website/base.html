@@ -43,7 +43,7 @@
 					</li>
 					{% if user.is_authenticated %}
 					<li>
-						<a href='#'>
+						<a href='{% url "show_cart" %}'>
 							<span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span>&nbsp;
 							My Cart
 						</a>
@@ -97,9 +97,9 @@
 				<a href="https://www.linkedin.com/in/abhay-tyagi-32567b61/" target="_blank"><i class="fa fa-linkedin foot"></i></a>
 				<a href="https://github.com/abhay-tyagi" target="_blank"><i class="fa fa-github foot"></i></a>
 			</div>
+
 			<div class="footer-left">
 				<p id='time'></p>
-<br>
 				<h4 style="color:white;">Paradise Shopping &copy;</h4>
 			</div>
 		</footer>

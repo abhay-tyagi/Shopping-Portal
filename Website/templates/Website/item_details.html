@@ -11,7 +11,7 @@
 			{% if item.status %}
 			{% else %}
 				<div class='alert alert-danger'>
-					<h3 style="text-align: center;"><strong>Item is out of stock</strong></h3>
+					<h3 id='dang-box'><strong>Item is out of stock</strong></h3>
 				</div>
 			{% endif %}
 
@@ -65,7 +65,7 @@
 						<span class='glyphicon glyphicon-usd'></span>
 						Buy Now
 					</a>&nbsp;
-					<a href='#' class='btn btn-info btn-lg buy' data-toggle='modal' data-target='#confirmModal'>
+					<a href='{% url "add_to_cart" item.pk %}' class='btn btn-info btn-lg buy'>
 						<span class='glyphicon glyphicon-shopping-cart'></span>
 						Add to Cart
 					</a>
@@ -94,10 +94,12 @@
   		<div class="modal fade" id="regModal" role="dialog">
     		<div class="modal-dialog">
       			<div class="modal-content">
+
         			<div class="modal-header">
           				<button type="button" class="close" data-dismiss="modal">&times;</button>
           				<h4 class="modal-title">Sign Up</h4>
         			</div>
+
         			<div class="modal-body">
 						<form method="post" action="/register/" role="form" id="user_form">
 						{% csrf_token %}
@@ -119,6 +121,7 @@
 			            	</div>
 						</form>
         			</div>
+
       			</div> 
     		</div>
   		</div>
@@ -132,13 +135,15 @@
           				<h4 class="modal-title">Confirm Request</h4>
         			</div>
         			<div class='modal-body'>
-        				<div class='panel'>
+        				<div class='panel panel-info'>
         					<div class='panel-heading'>
         						<h2>{{item.name}}</h2>
         					</div>
         					<div class='panel-body'>
-        						<p>Price: {{item.unit_price}}</p>
+        						<p>Unit Price: {{item.unit_price}}</p>
         						<p>Category: {{item.category}}</p>
+        						<p id='totalc'>Quantity:</p>
+        						<button type='btn btn-info' onclick="showTotal();">Quantity:</button>
         					</div>
         				</div>
         			</div>

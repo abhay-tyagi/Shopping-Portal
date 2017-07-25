@@ -9,14 +9,14 @@
 	    <div class="row">
 	            {% for item in object_list %}
 	                <div class="col-sm-4">
-	                    <div class="thumbnail">
+	                    <div class="thumbnail bg-info clearfix">
 	                        <a href="{% url 'item_details' item.pk %}">
 	                            <img id='mainpageimage' src="/static/{{ item.pic }}" class="img-responsive">
 	                        </a>
 	                        <div class="caption">
 	                            <h2>{{ item.name }}</h2>
 	                            <h4>${{ item.unit_price}}</h4>
-	                            <a href="{% url 'item_details' item.pk %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+	                            <a href="{% url 'item_details' item.pk %}" class="btn btn-primary col-xs-12" role="button">View Details</a>
 	                        </div>
 	                    </div>
 	                </div>

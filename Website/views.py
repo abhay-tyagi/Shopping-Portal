@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse, render_to_response  
 from .models import Item, Review, User
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
 from django.views.generic import View
+from utilities import ardcon1, rdo, read_one
+from cart.cart import Cart
 
 # Create your views here.
 
@@ -22,7 +24,8 @@ def item_details(request, pk):
     for i in range(item.quantity):
         lst.append(i+1)
     qty = ''.join(str(e) for e in lst)
-    print(qty)
+
+    cost = 5
 
     return render(request, 'Website/item_details.html', {'item': item, 'qty': str(qty)})
 
@@ -73,10 +76,35 @@ def user_login(request):
         else:
         	return render(request, 'Website/login_failed.html', {})
 
+
+def add_to_cart(request, pk):
+    product = Item.objects.get(pk=pk)
+    cart = Cart(request)
+    cart.add(product, product.unit_price, 1)
+
+    return redirect('show_cart')
+    #return render(request, 'Website/index.html', {})
+
+def remove_from_cart(request, pk):
+    product = Item.objects.get(pk=pk)
+    cart = Cart(request)
+    cart.remove(product)
+
+    return redirect('show_cart')
+    #return render(request, 'Website/show_cart.html', {})
+
+def get_cart(request):
+    return render_to_response('Website/show_cart.html', dict(cart=Cart(request)))
+
 def thanks(request, pk):
     item = get_object_or_404(Item, pk=pk)
     item.quantity -= 1
     item.save()
+
+    #qr_found = ardcon1.func(item.xcord, item.ycord, item.QRcode)
+    #if qr_found == item.QRcode:
+    #    pass
+
     return render(request, 'Website/thanks.html', {'item': item})
 
 def contact_us(request):

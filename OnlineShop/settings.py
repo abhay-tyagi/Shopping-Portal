@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Website',
+    'cart',
 ]
+
+CART_PRODUCT_MODEL = 'Website.models.Item'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,7 +73,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'OnlineShop.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -118,7 +120,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
 
 STATIC_URL = '/static/'
 MEDIA_PATH = os.path.join(BASE_DIR, 'media')
