@@ -1,24 +1,68 @@
-var selectedValue;
+function calcTotal()
+{
+	var unitPrice = document.getElementById('unit').innerHTML;
+	var qty = document.getElementById('numb').value;
+	var total = unitPrice*qty;
+
+	document.getElementById('total').innerHTML = total;
+}
 
 function reduceQty()
 {
 	var ddl = document.getElementById("numitem");
-	selectedValue = ddl.options[ddl.selectedIndex].text;
+	var	selectedValue = ddl.options[ddl.selectedIndex].text;
 }
-
-function showTotal()
-{
-	var ddl = document.getElementById("numitem");
-	var vale = ddl.options[ddl.selectedIndex].text;
-	
-	$("#totalc").text(vale);
-}
-
 
 function showTime() {
 	$('footer #time').text(Date());
 }
 
-$(document).ready(function() {
-	setInterval(showTime, 1000);
-	});
+function thisOne()
+	{
+		var shit = document.getElementById('amount');
+		var also = document.getElementById('paybtn');
+		var carstatus = document.getElementById('cartstat');
+		if(shit.innerHTML == 0)
+		{
+			also.className += " disabled";
+			carstatus.innerHTML = "Cart Empty";
+		}
+	}
+
+function verifyForm()
+{
+	if(document.forms['loginform']['username'].value == "" )
+		alert("Please enter username.");
+	else if(document.forms['loginform']['password'].value == "")
+		alert("Please enter password");
+}
+
+function verifyRegForm()
+{
+	if(document.forms['regform']['username'].value == "")
+		alert("Please enter unique username");
+	else if(document.forms['regform']['email'].value == "")
+		alert("PLease enter email");
+	else if(document.forms['regform']['password'].value == "")
+		alert("Please enter password");
+	else
+		alert("Username already taken.");
+}
+
+function verifyNumber()
+{
+	var target = document.getElementById('numb').value;
+	var target1 = document.getElementById('verbtn');
+
+
+	if(target == "" || target == 0)
+		alert("PLease choose quantity");
+	else if(Number(target) > Number(document.getElementById('maxiq').innerHTML))
+		alert("Insufficient stock. Reduce quantity");
+	else
+	{
+		target1.innerHTML = "Done";
+		document.getElementById('disbtn').className += " hidden";
+	}
+}
+setInterval(showTime, 1000);

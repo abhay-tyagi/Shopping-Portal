@@ -23,6 +23,7 @@
 	        {% endfor %}
 	    </table>
 
-	    <a href="{% url 'thanks' 2 %}" class="btn btn-primary">Checkout</a>
+	    <a onmouseover= "thisOne()" href="{% url 'thanks_cart' pay %}" class="btn btn-primary" id='paybtn'><span id='cartstat'>Pay $<span id='amount'>{{pay}}</span> and Checkout</span></a>
 	</div>
+
 {% endblock %}

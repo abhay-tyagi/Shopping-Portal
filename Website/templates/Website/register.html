@@ -16,15 +16,7 @@
 <div class='container'>
 	<div class='row'>
 		<div class='col-md-4 col-md-offset-4'>
-			<div class='panel panel-danger' id='Panel'>
-				<div id='already' class='panel-heading'>
-					<h3>Username Already taken</h3> 
-				</div>
-				<div id='already' class='panel-body'>
-					<p>Please choose a unique Username</p>
-				</div>
-			</div>
-			<form method="post" action="" role="form" id="user_form">
+			<form method="post" action="" role="form" id="user_form" name='regform'>
 			{% csrf_token %}
 		        <div class="form-group">
 		        	<label class="control-label" for="signupName"><span class="glyphicon glyphicon-user"></span>  Username</label>
@@ -48,13 +40,9 @@
 </div>
 
 {% if already_member %}
-<script type="text/javascript">
-	$('#Panel').show();
-</script>
-{% else %}
-<script type="text/javascript">
-	$('#Panel').hide();
-</script>
+	<script type="text/javascript">
+		verifyRegForm();
+	</script>
 {% endif %}
 
 {% endblock %}

@@ -10,6 +10,8 @@ from cart.cart import Cart
 
 # Create your views here.
 
+in_cart= []
+
 class index(generic.ListView):
 	template_name = 'Website/index.html'
 
@@ -74,7 +76,10 @@ def user_login(request):
             else:
                 return HttpResponse("Your account is disabled.")
         else:
-        	return render(request, 'Website/login_failed.html', {})
+            if username != "" and password != "":
+        	   return render(request, 'Website/login_failed.html', {})
+            else:
+                return redirect(next)
 
 
 def add_to_cart(request, pk):
@@ -94,9 +99,15 @@ def remove_from_cart(request, pk):
     #return render(request, 'Website/show_cart.html', {})
 
 def get_cart(request):
-    return render_to_response('Website/show_cart.html', dict(cart=Cart(request)))
+    cart = Cart(request)
 
-def thanks(request, pk):
+    pay = 0
+    for item in cart:
+        pay += int(item.total_price)
+
+    return render(request, 'Website/show_cart.html', {'pay': str(pay), 'cart': Cart(request)})
+
+def thanks_buy(request, pk):
     item = get_object_or_404(Item, pk=pk)
     item.quantity -= 1
     item.save()
@@ -105,7 +116,22 @@ def thanks(request, pk):
     #if qr_found == item.QRcode:
     #    pass
 
-    return render(request, 'Website/thanks.html', {'item': item})
+    return render(request, 'Website/thanks_buy.html', {'item': item})
+
+def thanks_cart(request, cost):
+    cart = Cart(request)
+    prods = Item.objects.all()
+
+    for item in cart:
+        for prod in prods:
+            if item.product.name == prod.name:
+                pass #call arduino
+
+    #qr_found = ardcon1.func(item.xcord, item.ycord, item.QRcode)
+    #if qr_found == item.QRcode:
+    #    pass
+    
+    return render(request, 'Website/thanks_cart.html', {'cart': cart, 'cost': cost})
 
 def contact_us(request):
     return render(request, 'Website/contact_us.html', {})

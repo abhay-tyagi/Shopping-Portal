@@ -66,7 +66,7 @@
 						</li>
 					</ul>
 					{% else %}
-						<form id='login_form' class='navbar-form navbar-right' role='form' method='post' action='/login/'>
+						<form name ='loginform' id='login_form' class='navbar-form navbar-right' role='form' method='post' action='/login/'>
 						{% csrf_token %}
 			                <div class='input-group'>
 			                  <span class='input-group-addon'><i class='glyphicon glyphicon-user'></i></span>
@@ -78,7 +78,7 @@
 			                  <input autocomplete='off' id='password' type='password' class='form-control' name='password' placeholder='Password'>                                        
 			                </div>
 
-			                <button type='submit' class='btn btn-success' id='logbtn'>Login</button>
+			                <button onclick='verifyForm()' type='submit' class='btn btn-success' id='logbtn'>Login</button>
 			                <input type="hidden" name="next" value="{{ request.path }}">
 			                <a href="{% url 'register' %}" class='btn btn-info' id='myBtn'>	Register</a>
 	              		</form>

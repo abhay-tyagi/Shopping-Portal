@@ -8,21 +8,23 @@
 	<div class="container">
 		<div class='panel panel-info'>
 			<div class='panel-heading'>
-				<h2>Thank you for purchasing {{item.name}}</h2>
+				<h2>Thank you for purchasing</h2>
 			</div>
 			<div class='panel-body'>
 				<table class='table table-hover'>
 					<thead>
 						<tr>
-							<th>Cost</th>
-							<th>Category</th>
+							<th>Item</th>
+							<th>Price</th>
 						</tr>
 					</thead>
 					<tbody>
+					{% for item in cart %}
 						<tr>
-							<td>$ {{item.unit_price}}</td>
-							<td>{{item.category}}</td>
+							<td>{{item.product.name}}</td>
+							<td>${{item.total_price}}</td>
 						</tr>
+					{% endfor %}
 					</tbody>
 				</table>
 			</div>
