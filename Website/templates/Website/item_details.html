@@ -139,7 +139,7 @@
         					<div class='panel-body'>
         						<p>Unit Price: $<span id='unit'>{{item.unit_price}}</span></p>
         						<p>Category: {{item.category}}</p>
-        						<p>Total Cost: $<span id='total' onmouseover='calcTotal()'>   Hover To See Total</span></p>
+        						<p>Total Cost: $<span id='total'>   Hover To See Total</span></p>
         					</div>
         				</div>
         			</div>
@@ -149,6 +149,9 @@
         			</div>
 				</div>
 			</div>
+			<script type="text/javascript">
+				document.getElementById('confirmModal').addEventListener('mouseover', calcTotal);
+			</script>
 		</div>
 	</div>
 	

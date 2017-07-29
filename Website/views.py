@@ -22,14 +22,7 @@ class index(generic.ListView):
 def item_details(request, pk):
     item = get_object_or_404(Item, pk=pk)
 
-    lst = []
-    for i in range(item.quantity):
-        lst.append(i+1)
-    qty = ''.join(str(e) for e in lst)
-
-    cost = 5
-
-    return render(request, 'Website/item_details.html', {'item': item, 'qty': str(qty)})
+    return render(request, 'Website/item_details.html', {'item': item})
 
 
 class register(View):
@@ -130,8 +123,13 @@ def thanks_cart(request, cost):
     #qr_found = ardcon1.func(item.xcord, item.ycord, item.QRcode)
     #if qr_found == item.QRcode:
     #    pass
-    
     return render(request, 'Website/thanks_cart.html', {'cart': cart, 'cost': cost})
+
+def clear_cart(request):
+    cart = Cart(request)
+    cart.clear()
+
+    return render(request, 'Website/clear_cart.html', {})
 
 def contact_us(request):
     return render(request, 'Website/contact_us.html', {})

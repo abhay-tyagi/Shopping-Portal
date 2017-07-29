@@ -3,14 +3,10 @@ function calcTotal()
 	var unitPrice = document.getElementById('unit').innerHTML;
 	var qty = document.getElementById('numb').value;
 	var total = unitPrice*qty;
-
+	//var t = total.toString();
+	//localStorage.setItem("t", t);
+	window.name = total.toString()
 	document.getElementById('total').innerHTML = total;
-}
-
-function reduceQty()
-{
-	var ddl = document.getElementById("numitem");
-	var	selectedValue = ddl.options[ddl.selectedIndex].text;
 }
 
 function showTime() {
