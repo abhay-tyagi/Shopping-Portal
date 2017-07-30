@@ -37,7 +37,7 @@ class Review(models.Model):
 	body = models.TextField()
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	product = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
-	review_date = models.DateField()
+	review_date = models.DateField(null=True)
 
 	def __str__(self):
 		return self.title

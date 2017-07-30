@@ -21,8 +21,23 @@ class index(generic.ListView):
 
 def item_details(request, pk):
     item = get_object_or_404(Item, pk=pk)
+    reviews = Review.objects.filter(product=item)
 
-    return render(request, 'Website/item_details.html', {'item': item})
+    if request.user.is_authenticated:
+        new_title = request.GET.get('title')
+        new_content = request.GET.get('comment')
+        usern = request.user.get_username()
+
+        new_r = Review()
+        new_r.title = new_title
+        new_r.body = new_content
+        new_r.user = User.objects.get(username=usern)
+        new_r.product = item
+
+        if new_r.title is not None:
+            new_r.save()
+
+    return render(request, 'Website/item_details.html', {'item': item, 'reviews': reviews})
 
 
 class register(View):
