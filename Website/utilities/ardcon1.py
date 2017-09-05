@@ -4,7 +4,7 @@ import read_one
 from random import randint
 import sys
 '''
-def func(xcord, ycord, QRcode):
+def func(xcord, ycord):
 	ser = serial.Serial('/dev/ttyACM0', 9600)
 	time.sleep(2)
 	count = 0

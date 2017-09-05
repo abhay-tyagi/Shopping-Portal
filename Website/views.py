@@ -12,17 +12,18 @@ from cart.cart import Cart
 
 in_cart= []
 
-# class index(generic.ListView):
-# 	template_name = 'Website/index.html'
-
-
-
-# 	def get_queryset(self):
-# 		return Item.objects.all()
-
 
 def index(request):
     items = Item.objects.all()
+    rows = 5
+    cols = 5
+
+    # xpos = 0
+    # ypos = 0
+
+    # with open('positon.txt', 'w') as f:
+    #     f.write(str(xpos))
+    #     f.write(str(ypos))
 
     flag = 0
     for item in items:
@@ -32,8 +33,26 @@ def index(request):
 
     if flag == 1:
         for item in items:
+            with open('position.txt', 'r') as f:
+                coords = f.read(2)
+            xpos = int(coords[0])
+            ypos = int(coords[1])
+
+            #movement()
+
             qr = read_one.funct()
-            print qr
+            item.qr = qr
+            item.save()
+
+
+            #print qr
+
+        #go to 0 0
+
+        # with open('positon.txt', 'w') as f:
+        #     f.write(str(0))
+        #     f.write(str(0))
+
     return render(request, 'Website/index.html', {'items': items})
 
 def item_details(request, pk):
@@ -114,7 +133,6 @@ def add_to_cart(request, pk):
     cart.add(product, product.unit_price, 1)
 
     return redirect('show_cart')
-    #return render(request, 'Website/index.html', {})
 
 def remove_from_cart(request, pk):
     product = Item.objects.get(pk=pk)
@@ -122,7 +140,6 @@ def remove_from_cart(request, pk):
     cart.remove(product)
 
     return redirect('show_cart')
-    #return render(request, 'Website/show_cart.html', {})
 
 def get_cart(request):
     cart = Cart(request)
@@ -138,9 +155,10 @@ def thanks_buy(request, pk):
     item.quantity -= 1
     item.save()
 
-    #qr_found = ardcon1.func(item.xcord, item.ycord, item.QRcode)
-    #if qr_found == item.QRcode:
-    #    pass
+    # go from 0 0 to item.xcord item.ycord
+    # ardcon1.func(item.xcord, item.ycord)
+    # if qr_found == item.QRcode:
+    #     pass
 
     return render(request, 'Website/thanks_buy.html', {'item': item})
 
@@ -148,10 +166,23 @@ def thanks_cart(request, cost):
     cart = Cart(request)
     prods = Item.objects.all()
 
+    with open('cartmove.txt', 'w') as f:
+        f.write(str(0))
+        f.write(str(0))
+    
     for item in cart:
         for prod in prods:
             if item.product.name == prod.name:
-                pass #call arduino
+                # call arduino
+                xpos = prod.xcord
+                ypos = prod.ycord
+                
+                with open('positon.txt', 'w') as f:
+                    coords = f.read(2)
+                xpos = coords[0]
+                ypos = coords[1]
+
+                # movement from xpos ypos to item.xcord item.ycord
 
     #qr_found = ardcon1.func(item.xcord, item.ycord, item.QRcode)
     #if qr_found == item.QRcode:
