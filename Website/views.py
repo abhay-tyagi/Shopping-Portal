@@ -12,16 +12,34 @@ from cart.cart import Cart
 
 in_cart= []
 
-class index(generic.ListView):
-	template_name = 'Website/index.html'
+# class index(generic.ListView):
+# 	template_name = 'Website/index.html'
 
-	def get_queryset(self):
-		return Item.objects.all()
 
+
+# 	def get_queryset(self):
+# 		return Item.objects.all()
+
+
+def index(request):
+    items = Item.objects.all()
+
+    flag = 0
+    for item in items:
+        if item.xcord == 0:
+            flag = 1
+            break
+
+    if flag == 1:
+        for item in items:
+            qr = read_one.funct()
+            print qr
+    return render(request, 'Website/index.html', {'items': items})
 
 def item_details(request, pk):
     item = get_object_or_404(Item, pk=pk)
     reviews = Review.objects.filter(product=item)
+
 
     if request.user.is_authenticated:
         new_title = request.GET.get('title')
